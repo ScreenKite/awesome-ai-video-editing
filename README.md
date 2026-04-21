@@ -23,7 +23,21 @@ for the full pipeline.
 ## Installation
 
 Skills are designed for [Claude Code](https://claude.com/product/claude-code).
-To use a skill, symlink (or copy) it into your Claude Code skills directory:
+
+### Quick install (recommended)
+
+Use the [Skills CLI](https://skills.sh) to install directly from GitHub:
+
+```bash
+npx skills add ScreenKite/awesome-ai-video-editing
+```
+
+The CLI auto-detects Claude Code and places the skill in the correct directory.
+
+### Manual install
+
+Alternatively, clone this repo and symlink the skill into your Claude Code skills
+directory:
 
 ```bash
 # Global (available in all projects)
