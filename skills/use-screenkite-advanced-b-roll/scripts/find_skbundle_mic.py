@@ -2,8 +2,8 @@
 """Locate the microphone audio file inside a ScreenKite .skbundle.
 
 Usage:
-    uv run find_skbundle_mic.py <bundle_path>
-    uv run find_skbundle_mic.py <bundle_path> --json
+    python3 find_skbundle_mic.py <bundle_path>
+    python3 find_skbundle_mic.py <bundle_path> --json
 """
 from __future__ import annotations
 import argparse

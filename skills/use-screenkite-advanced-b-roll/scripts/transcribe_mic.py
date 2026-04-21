@@ -13,9 +13,9 @@ diarize + audio events + word-level timestamps, writes full response to
 Cached: if the output file already exists, upload is skipped.
 
 Usage:
-    uv run transcribe_mic.py <audio_or_video_path>
-    uv run transcribe_mic.py <audio> --edit-dir /custom/edit
-    uv run transcribe_mic.py <audio> --language zho --num-speakers 1
+    python3 transcribe_mic.py <audio_or_video_path>
+    python3 transcribe_mic.py <audio> --edit-dir /custom/edit
+    python3 transcribe_mic.py <audio> --language zho --num-speakers 1
 """
 from __future__ import annotations
 import argparse

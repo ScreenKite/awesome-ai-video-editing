@@ -176,7 +176,7 @@ Set `"dryRun": true` in the payload to get the resolved surface geometry without
 # Segments on the scene-layout track
 '/Applications/ScreenKite.app/Contents/MacOS/ScreenKite' agent tool call \
   --name getProjectState --input-json '{"scope":"layout"}' --json | \
-  uv run python3 -c "import sys,json; d=json.load(sys.stdin); [print(f\"{s['start']:6.2f}→{s['end']:6.2f}s  {s['mode']}\") for s in d['layout']['segments']]"
+  python3 -c "import sys,json; d=json.load(sys.stdin); [print(f\"{s['start']:6.2f}→{s['end']:6.2f}s  {s['mode']}\") for s in d['layout']['segments']]"
 ```
 
 After applying the plan, verify:
