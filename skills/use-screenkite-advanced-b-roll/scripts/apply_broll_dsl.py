@@ -26,10 +26,10 @@ Per-slot optional fields (defaults in parens):
   source       (default: <broll_dir>/slot_<num>/renders/slot_<num>.mp4)
 
 Usage:
-    python3 apply_broll_dsl.py <plan.json>
-    python3 apply_broll_dsl.py <plan.json> --dry-run       # print only
-    python3 apply_broll_dsl.py <plan.json> --no-clear      # skip tail clearing
-    python3 apply_broll_dsl.py <plan.json> --sk /path/to/ScreenKite
+    uv run apply_broll_dsl.py <plan.json>
+    uv run apply_broll_dsl.py <plan.json> --dry-run       # print only
+    uv run apply_broll_dsl.py <plan.json> --no-clear      # skip tail clearing
+    uv run apply_broll_dsl.py <plan.json> --sk /path/to/ScreenKite
 """
 from __future__ import annotations
 import argparse

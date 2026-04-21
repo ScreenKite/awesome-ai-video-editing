@@ -6,9 +6,9 @@ speaker change. Each phrase gets [start-end] prefix for addressing cuts.
 Output: <edit-dir>/takes_packed.md
 
 Usage:
-    python3 pack_transcripts.py --edit-dir <edit_dir>
-    python3 pack_transcripts.py --edit-dir <edit_dir> --silence-threshold 0.5
-    python3 pack_transcripts.py --edit-dir <edit_dir> -o out.md
+    uv run pack_transcripts.py --edit-dir <edit_dir>
+    uv run pack_transcripts.py --edit-dir <edit_dir> --silence-threshold 0.5
+    uv run pack_transcripts.py --edit-dir <edit_dir> -o out.md
 """
 from __future__ import annotations
 import argparse

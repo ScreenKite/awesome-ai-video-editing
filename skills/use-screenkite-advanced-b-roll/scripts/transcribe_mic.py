@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["requests"]
+# ///
 """Transcribe a microphone audio file with ElevenLabs Scribe.
 
 Uses ELEVEN_LABS_API_KEY (underscored form) from project .env or environment.
@@ -9,9 +13,9 @@ diarize + audio events + word-level timestamps, writes full response to
 Cached: if the output file already exists, upload is skipped.
 
 Usage:
-    python3 transcribe_mic.py <audio_or_video_path>
-    python3 transcribe_mic.py <audio> --edit-dir /custom/edit
-    python3 transcribe_mic.py <audio> --language zho --num-speakers 1
+    uv run transcribe_mic.py <audio_or_video_path>
+    uv run transcribe_mic.py <audio> --edit-dir /custom/edit
+    uv run transcribe_mic.py <audio> --language zho --num-speakers 1
 """
 from __future__ import annotations
 import argparse

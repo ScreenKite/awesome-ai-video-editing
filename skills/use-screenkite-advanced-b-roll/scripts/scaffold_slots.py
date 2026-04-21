@@ -9,9 +9,9 @@ Each slot_XX/ gets:
 index.html is NOT created here — parallel sub-agents write it in Phase 6.
 
 Usage:
-    python3 scaffold_slots.py <broll_dir> <count>
-    python3 scaffold_slots.py <broll_dir> 7 --duration 5.5
-    python3 scaffold_slots.py <broll_dir> 7 --start 3      # start numbering at 03
+    uv run scaffold_slots.py <broll_dir> <count>
+    uv run scaffold_slots.py <broll_dir> 7 --duration 5.5
+    uv run scaffold_slots.py <broll_dir> 7 --start 3      # start numbering at 03
 """
 from __future__ import annotations
 import argparse

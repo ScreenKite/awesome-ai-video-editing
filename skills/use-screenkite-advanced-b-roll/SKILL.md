@@ -25,7 +25,8 @@ Layer short, animated B-roll visuals on top of a ScreenKite recording's screen+c
 
 - **ScreenKite.app** at `/Applications/ScreenKite.app` (macOS).
 - **Node ≥ 22** and **FFmpeg** on PATH.
-- **`ELEVEN_LABS_API_KEY`** in project `.env` (note: *not* `ELEVENLABS_API_KEY` — this repo uses the underscored form).
+- **[uv](https://docs.astral.sh/uv/)** (recommended) — fast Python script runner. If available, prefer `uv run` over `python3` — it auto-provisions dependencies via PEP 723 inline metadata (no manual `pip install` needed). Install: `curl -LsSf https://astral.sh/uv/install.sh | sh`. Falls back to `python3` if `uv` is not installed (you'll need to `pip install requests` manually for `transcribe_mic.py`).
+- **`ELEVEN_LABS_API_KEY`** in the project `.env` (note: *not* `ELEVENLABS_API_KEY` — this repo uses the underscored form). **If the key is missing or `.env` does not exist, ask the user to provide the key before proceeding.** Do not silently fail or skip transcription.
 - **Hyperframes CLI** — invoked via `npx hyperframes` (auto-installs on first use). Repo: https://github.com/heygen-com/hyperframes
 - **Hyperframes agent skills** (optional but helpful for sub-agents): `npx skills add heygen-com/hyperframes` — registers `hyperframes`, `hyperframes-cli`, `gsap` skills.
 - **video-use helpers** (bundled copies at `scripts/transcribe_mic.py` and `scripts/pack_transcripts.py`; upstream: https://github.com/browser-use/video-use).
@@ -45,15 +46,19 @@ Confirm the project is open in ScreenKite (so later CLI calls have a current pro
 
 ## Phase 2 — Transcribe
 
-Use `scripts/transcribe_mic.py` — a thin wrapper over ElevenLabs Scribe that reads `ELEVEN_LABS_API_KEY` from the project `.env` and caches per-source.
+Use `scripts/transcribe_mic.py` — a thin wrapper over ElevenLabs Scribe that reads `ELEVEN_LABS_API_KEY` from the project `.env` and caches per-source. Prefer `uv run` (auto-installs `requests` via PEP 723 inline metadata); `python3` works if `requests` is already installed.
+
+**Before running:** verify `ELEVEN_LABS_API_KEY` exists in the project `.env`. If it does not, **stop and ask the user for the key**. Write it to `.env` as `ELEVEN_LABS_API_KEY=<key>` before proceeding.
 
 ```bash
-python3 scripts/transcribe_mic.py \
+uv run scripts/transcribe_mic.py \
   '<bundle>/media/microphone_dji-mic-mini.m4a' \
-  --edit-dir '<bundle-parent>/<project-slug>-edit' \
+  --edit-dir '.' \
   --language zho \
   --num-speakers 1
 ```
+
+`--edit-dir` defaults to the current workspace directory (`.`) so transcripts, packed views, and B-roll all live alongside the agent's working tree. You can also pass `--edit-dir '<bundle-parent>/<project-slug>-edit'` to co-locate outputs next to the `.skbundle` instead.
 
 Output: `<edit-dir>/transcripts/microphone_*.json` (word-level, diarized, audio events, ~155KB for 3 minutes).
 
@@ -64,7 +69,7 @@ Cached: skips re-upload if output exists.
 ### 3a. Pack to phrase-level view
 
 ```bash
-python3 scripts/pack_transcripts.py --edit-dir '<edit-dir>'
+uv run scripts/pack_transcripts.py --edit-dir '<edit-dir>'
 ```
 
 Produces `<edit-dir>/takes_packed.md` — phrases break on silences ≥ 0.5s. 10× more compact than raw JSON.
@@ -113,7 +118,7 @@ broll/
 ├── slot_02/ ... slot_NN/
 ```
 
-Use `scripts/scaffold_slots.py <broll-dir> <count>` to create the directories with `hyperframes.json` stubs. Copy logo/asset files into the appropriate `slot_XX/assets/` folder if a slot needs them (e.g., ScreenKite self-promo).
+Use `uv run scripts/scaffold_slots.py <broll-dir> <count>` to create the directories with `hyperframes.json` stubs. Copy logo/asset files into the appropriate `slot_XX/assets/` folder if a slot needs them (e.g., ScreenKite self-promo).
 
 ## Phase 6 — Parallel sub-agents build each index.html
 
@@ -180,7 +185,7 @@ Each slot's display window should be **entry + reading hold**, not the compositi
 Use `scripts/apply_broll_dsl.py` — reads a plan JSON, applies each via the ScreenKite CLI, then clears any old tails.
 
 ```bash
-python3 scripts/apply_broll_dsl.py <plan.json>
+uv run scripts/apply_broll_dsl.py <plan.json>
 ```
 
 See `references/dsl-cookbook.md` for the plan.json schema and ready-to-copy DSL snippets.
@@ -218,7 +223,9 @@ The ScreenKite DSL references the MP4 by absolute path, so replacing the file is
 - `references/visual-ideas-menu.md` — beat-by-beat idea catalog + density bundles
 - `references/subagent-brief-template.md` — self-contained brief template for parallel agents
 
-## Scripts (runnable, token-efficient)
+## Scripts (token-efficient)
+
+Prefer `uv run` (auto-provisions deps, no venv needed). Falls back to `python3` — only `transcribe_mic.py` needs `requests`; the rest are stdlib-only.
 
 - `scripts/transcribe_mic.py` — ElevenLabs Scribe wrapper, cached, uses `ELEVEN_LABS_API_KEY`
 - `scripts/pack_transcripts.py` — phrase-level packing from raw Scribe JSON
