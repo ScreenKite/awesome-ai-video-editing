@@ -20,6 +20,23 @@ accents layered on top of the screen + camera composition.
 See [`skills/use-screenkite-advanced-b-roll/SKILL.md`](skills/use-screenkite-advanced-b-roll/SKILL.md)
 for the full pipeline.
 
+---
+
+### [`screenkite-transcription-cut`](skills/screenkite-transcription-cut/)
+
+Transcript-driven silence removal for ScreenKite recordings. Transcribes mic
+audio with ElevenLabs Scribe, detects inter-word gaps above a configurable
+threshold, shows a dry-run table for user confirmation, then applies cuts
+via ScreenKite's `editTimeline` `cut` action. Includes three helper scripts
+(`transcribe_mic.py`, `compute_silence_cuts.py`, `apply_cuts.py`) and a
+mandatory dry-run gate before any destructive change.
+
+**Use when:** you want to "remove silences", "auto-cut dead air",
+"transcript-based cut", or "clean up pauses" in a `.skbundle` project.
+
+See [`skills/screenkite-transcription-cut/SKILL.md`](skills/screenkite-transcription-cut/SKILL.md)
+for the full pipeline.
+
 ## Installation
 
 Skills are designed for [Claude Code](https://claude.com/product/claude-code).
@@ -43,11 +60,15 @@ directory:
 # Global (available in all projects)
 ln -s "$(pwd)/skills/use-screenkite-advanced-b-roll" \
       ~/.claude/skills/use-screenkite-advanced-b-roll
+ln -s "$(pwd)/skills/screenkite-transcription-cut" \
+      ~/.claude/skills/screenkite-transcription-cut
 
 # Or per-project
 mkdir -p .claude/skills
 ln -s "$(pwd)/skills/use-screenkite-advanced-b-roll" \
       .claude/skills/use-screenkite-advanced-b-roll
+ln -s "$(pwd)/skills/screenkite-transcription-cut" \
+      .claude/skills/screenkite-transcription-cut
 ```
 
 Claude Code will auto-discover the skill and invoke it when the user's request
@@ -55,7 +76,9 @@ matches its `description`.
 
 ## Prerequisites
 
-Each skill documents its own prerequisites. For `use-screenkite-advanced-b-roll`:
+Each skill documents its own prerequisites.
+
+**`use-screenkite-advanced-b-roll`**
 
 - macOS with [ScreenKite.app](https://screenkite.com)
 - Node.js ≥ 22 and FFmpeg
@@ -65,6 +88,13 @@ Each skill documents its own prerequisites. For `use-screenkite-advanced-b-roll`
 
 See [`skills/use-screenkite-advanced-b-roll/references/external-tools.md`](skills/use-screenkite-advanced-b-roll/references/external-tools.md)
 for the full environment check.
+
+**`screenkite-transcription-cut`**
+
+- macOS with [ScreenKite.app](https://screenkite.com) and `screenkite` CLI at `/usr/local/bin/screenkite`
+- FFmpeg on PATH
+- [ElevenLabs](https://elevenlabs.io) API key (`ELEVEN_LABS_API_KEY` in a `.env` anywhere up from the bundle)
+- Python 3 with `requests` (`pip install requests`)
 
 ## Contributing
 
