@@ -37,6 +37,24 @@ mandatory dry-run gate before any destructive change.
 See [`skills/screenkite-transcription-cut/SKILL.md`](skills/screenkite-transcription-cut/SKILL.md)
 for the full pipeline.
 
+---
+
+### [`screenkite-clean-cut`](skills/screenkite-clean-cut/)
+
+Combined silence **and** filler-word removal for ScreenKite recordings in a
+single pass. Transcribes mic audio with ElevenLabs Scribe, detects both
+inter-word silence gaps and hesitation sounds (um, uh, ah, er, hmm), merges
+all cut ranges, shows a mandatory dry-run table for confirmation, then applies
+everything via a single `editTimeline` call. Superset of
+`screenkite-transcription-cut`.
+
+**Use when:** you want to "clean up audio", "remove filler words", "remove ums
+and uhs", "cut dead air and fillers", or run a "full auto-cut" on a
+`.skbundle` project.
+
+See [`skills/screenkite-clean-cut/SKILL.md`](skills/screenkite-clean-cut/SKILL.md)
+for the full pipeline.
+
 ## Installation
 
 Skills are designed for [Claude Code](https://claude.com/product/claude-code).
@@ -62,6 +80,8 @@ ln -s "$(pwd)/skills/use-screenkite-advanced-b-roll" \
       ~/.claude/skills/use-screenkite-advanced-b-roll
 ln -s "$(pwd)/skills/screenkite-transcription-cut" \
       ~/.claude/skills/screenkite-transcription-cut
+ln -s "$(pwd)/skills/screenkite-clean-cut" \
+      ~/.claude/skills/screenkite-clean-cut
 
 # Or per-project
 mkdir -p .claude/skills
@@ -69,6 +89,8 @@ ln -s "$(pwd)/skills/use-screenkite-advanced-b-roll" \
       .claude/skills/use-screenkite-advanced-b-roll
 ln -s "$(pwd)/skills/screenkite-transcription-cut" \
       .claude/skills/screenkite-transcription-cut
+ln -s "$(pwd)/skills/screenkite-clean-cut" \
+      .claude/skills/screenkite-clean-cut
 ```
 
 Claude Code will auto-discover the skill and invoke it when the user's request
@@ -95,6 +117,13 @@ for the full environment check.
 - FFmpeg on PATH
 - [ElevenLabs](https://elevenlabs.io) API key (`ELEVEN_LABS_API_KEY` in a `.env` anywhere up from the bundle)
 - Python 3 with `requests` (`pip install requests`)
+
+**`screenkite-clean-cut`**
+
+- macOS with [ScreenKite.app](https://screenkite.com) and `screenkite-alpha` CLI at `/usr/local/bin/screenkite-alpha` (or `screenkite`)
+- FFmpeg on PATH
+- [ElevenLabs](https://elevenlabs.io) API key (`ELEVEN_LABS_API_KEY` in a `.env` anywhere up from the bundle)
+- Python 3 with `requests` — prefer `uv run --with requests` to avoid install friction
 
 ## Contributing
 

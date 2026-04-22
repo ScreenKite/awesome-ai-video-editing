@@ -1,0 +1,1 @@
+../../screenkite-transcription-cut/scripts/transcribe_mic.py
