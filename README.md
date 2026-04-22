@@ -1,6 +1,6 @@
 # awesome-ai-video-editing
 
-A collection of Claude Code agent skills for AI-assisted video editing workflows.
+A collection of agent skills for AI-assisted video editing workflows. Built for Codex, Claude Code, and Gemini.
 
 ## Skills
 
@@ -57,7 +57,7 @@ for the full pipeline.
 
 ## Installation
 
-Skills are designed for [Claude Code](https://claude.com/product/claude-code).
+Skills are designed to work across multiple agent platforms including [Codex](https://usecodex.com), [Claude Code](https://claude.com/product/claude-code), and [Gemini](https://gemini.google.com).
 
 ### Quick install (recommended)
 
@@ -67,12 +67,12 @@ Use the [Skills CLI](https://skills.sh) to install directly from GitHub:
 npx skills add ScreenKite/awesome-ai-video-editing
 ```
 
-The CLI auto-detects Claude Code and places the skill in the correct directory.
+The CLI auto-detects your active agent platform and places the skill in the correct directory.
 
 ### Manual install
 
-Alternatively, clone this repo and symlink the skill into your Claude Code skills
-directory:
+Alternatively, clone this repo and symlink the skill into your agent's skills
+directory (example shown for Claude Code):
 
 ```bash
 # Global (available in all projects)
@@ -93,7 +93,7 @@ ln -s "$(pwd)/skills/screenkite-clean-cut" \
       .claude/skills/screenkite-clean-cut
 ```
 
-Claude Code will auto-discover the skill and invoke it when the user's request
+Your agent will auto-discover the skill and invoke it when the user's request
 matches its `description`.
 
 ## Prerequisites
