@@ -88,7 +88,7 @@ def compute_filler_cuts(words: list[dict], fillers: set[str], pad: float) -> lis
     """Return [{start, end, kind, text}] for each filler word hit."""
     cuts: list[dict] = []
     for w in words:
-        if w.get("type") != "word":
+        if w.get("type", "word") != "word":
             continue
         clean = re.sub(r"[^a-z]", "", w["text"].lower())
         if clean in fillers:
