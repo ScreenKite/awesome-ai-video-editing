@@ -55,6 +55,24 @@ and uhs", "cut dead air and fillers", or run a "full auto-cut" on a
 See [`skills/screenkite-clean-cut/SKILL.md`](skills/screenkite-clean-cut/SKILL.md)
 for the full pipeline.
 
+---
+
+### [`screenkite-audio-dub`](skills/screenkite-audio-dub/)
+
+Time-matched multilingual dubbing for ScreenKite recordings. Transcribes the
+mic track (ScreenKite `export-words` or ElevenLabs Scribe) to cue JSON / SRT,
+generates speech with **Fish Audio** (`s2.1-pro-free`) or ElevenLabs, fits each
+cue into the original start/end window (TTS speed + ffmpeg `atempo`, original
+pauses kept), mutes the microphone track, and imports the mix as a
+language-tagged audio track.
+
+**Use when:** you want to "dub this", "translate the narration", "replace the
+voiceover", "mute the mic and add English/Japanese/… audio", or "Fish Audio
+TTS" on a `.skbundle`.
+
+See [`skills/screenkite-audio-dub/SKILL.md`](skills/screenkite-audio-dub/SKILL.md)
+for the full pipeline.
+
 ## Installation
 
 Skills are designed to work across multiple agent platforms including [Codex](https://usecodex.com), [Claude Code](https://claude.com/product/claude-code), and [Gemini](https://gemini.google.com).
@@ -82,6 +100,8 @@ ln -s "$(pwd)/skills/screenkite-transcription-cut" \
       ~/.claude/skills/screenkite-transcription-cut
 ln -s "$(pwd)/skills/screenkite-clean-cut" \
       ~/.claude/skills/screenkite-clean-cut
+ln -s "$(pwd)/skills/screenkite-audio-dub" \
+      ~/.claude/skills/screenkite-audio-dub
 
 # Or per-project
 mkdir -p .claude/skills
@@ -91,6 +111,8 @@ ln -s "$(pwd)/skills/screenkite-transcription-cut" \
       .claude/skills/screenkite-transcription-cut
 ln -s "$(pwd)/skills/screenkite-clean-cut" \
       .claude/skills/screenkite-clean-cut
+ln -s "$(pwd)/skills/screenkite-audio-dub" \
+      .claude/skills/screenkite-audio-dub
 ```
 
 Your agent will auto-discover the skill and invoke it when the user's request
@@ -124,6 +146,14 @@ for the full environment check.
 - FFmpeg on PATH
 - [ElevenLabs](https://elevenlabs.io) API key (`ELEVEN_LABS_API_KEY` in a `.env` anywhere up from the bundle)
 - Python 3 with `requests` — prefer `uv run --with requests` to avoid install friction
+
+**`screenkite-audio-dub`**
+
+- macOS with [ScreenKite.app](https://screenkite.com) and `screenkite` CLI
+- FFmpeg + ffprobe on PATH
+- [Fish Audio](https://fish.audio) API key (`FISH_API_KEY`) and a voice `reference_id` — default TTS provider
+- Optional: [ElevenLabs](https://elevenlabs.io) API key for Scribe fallback TTS (`ELEVEN_LABS_API_KEY`)
+- Python 3 with `requests` — prefer `uv run --with requests`
 
 ## Contributing
 
