@@ -1,5 +1,6 @@
 # awesome-ai-video-editing
 
+- [Ideoy](https://ideoy.ai) - Remake this week's meme videos with one selfie (AI image-to-video, freemium, adults only).
 A collection of agent skills for AI-assisted video editing workflows. Built for Codex, Claude Code, and Gemini.
 
 ## Skills
